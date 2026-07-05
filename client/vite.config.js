@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': 'http://localhost:3001',
+      '/api': {
+        target: 'https://techatlas-api.onrender.com',
+        changeOrigin: true,
+      },
     },
   },
 })
