@@ -1,6 +1,7 @@
 const pool = require('../db/pool');
 const path = require('path');
 const { storeResources, updateLastFetched } = require('./utils/store');
+const { reclassifyAll } = require('../classifier');
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
@@ -147,6 +148,8 @@ async function runCollector() {
     console.log('');
   }
 
+  await reclassifyAll();
+  
   console.log('=== Done ===');
 }
 
