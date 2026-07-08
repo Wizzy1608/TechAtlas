@@ -6,6 +6,8 @@ import './features/browse';
 import './features/search';
 import './features/bookmarks';
 import './features/continue-reading';
+import './features/certifications';
+import DealBanner from './components/DealBanner';
 
 function App() {
   const [activeFeature, setActiveFeature] = useState('welcome');
@@ -47,6 +49,7 @@ function App() {
             </div>
           </div>
         </nav>
+                {activeFeature === 'welcome' && <DealBanner />}
         <main className="max-w-6xl mx-auto px-4 py-8">
           {current ? <current.Page /> : <p>Feature not found</p>}
         </main>
