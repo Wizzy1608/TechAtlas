@@ -4,7 +4,7 @@ import ResourceCard from '../../components/ResourceCard';
 import DifficultyFilter from '../../components/DifficultyFilter';
 import SkeletonCard from '../../components/SkeletonCard';
 import { registerFeature } from '../../feature-registry';
-import { getContinueReading } from '../../lib/continue-reading';
+import { getReadingList as getContinueReading } from '../../lib/continue-reading';
 
 function WelcomePage() {
   const [searchQuery, setSearchQuery] = useState('');
