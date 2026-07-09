@@ -19,6 +19,12 @@ function App() {
     setDarkMode(dark);
   }, [dark]);
 
+  useEffect(() => {
+    const handler = (e) => setActiveFeature(e.detail.feature);
+    window.addEventListener('navigate', handler);
+    return () => window.removeEventListener('navigate', handler);
+  }, []);
+
   return (
     <div className={dark ? 'dark' : ''}>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 dark:text-gray-100 transition-colors">
@@ -49,7 +55,9 @@ function App() {
             </div>
           </div>
         </nav>
-                {activeFeature === 'welcome' && <DealBanner />}
+
+        {activeFeature === 'welcome' && <DealBanner />}
+
         <main className="max-w-6xl mx-auto px-4 py-8">
           {current ? <current.Page /> : <p>Feature not found</p>}
         </main>

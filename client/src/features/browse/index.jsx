@@ -14,12 +14,13 @@ function BrowsePage() {
   const [source, setSource] = useState('');
   const [error, setError] = useState(null);
 
-  useEffect(() => {
+    useEffect(() => {
     setLoading(true);
     const params = new URLSearchParams();
     if (difficulty) params.set('difficulty', difficulty);
     if (domain) params.set('domain', domain);
     if (source) params.set('source', source);
+    params.set('category', '!certification');
 
     get(`/api/resources?${params.toString()}`)
       .then(data => {

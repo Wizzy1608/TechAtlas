@@ -14,9 +14,14 @@ function register(app, pool) {
         sql += ` AND domain = $${idx++}`;
         params.push(domain);
       }
-      if (category) {
-        sql += ` AND category = $${idx++}`;
-        params.push(category);
+            if (category) {
+        if (category.startsWith('!')) {
+          sql += ` AND category != $${idx++}`;
+          params.push(category.slice(1));
+        } else {
+          sql += ` AND category = $${idx++}`;
+          params.push(category);
+        }
       }
       if (source_name) {
         sql += ` AND source_name = $${idx++}`;
@@ -37,10 +42,10 @@ function register(app, pool) {
 
       const result = await pool.query(sql, params);
 
-      const countSql = 'SELECT COUNT(*) FROM resources WHERE 1=1' +
+            const countSql = 'SELECT COUNT(*) FROM resources WHERE 1=1' +
         (difficulty ? ` AND difficulty = '${difficulty}'` : '') +
         (domain ? ` AND domain = '${domain}'` : '') +
-        (category ? ` AND category = '${category}'` : '') +
+        (category ? ` AND category ${category.startsWith('!') ? '!=' : '='} '${category.replace('!', '')}'` : '') +
         (source_name ? ` AND source_name = '${source_name}'` : '') +
         (source ? ` AND source_type = '${source}'` : '');
       const countResult = await pool.query(countSql);

@@ -20,12 +20,12 @@ function WelcomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleSearch = (e) => {
+   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      const features = window.__TECHATLAS_FEATURES__;
-      const searchFeature = features?.find(f => f.name === 'search');
-      if (searchFeature?.activate) searchFeature.activate(searchQuery.trim());
+      window.dispatchEvent(new CustomEvent('navigate', {
+        detail: { feature: 'search' }
+      }));
     }
   };
 
