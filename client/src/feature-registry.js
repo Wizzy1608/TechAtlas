@@ -9,3 +9,4 @@ function getFeatures() {
 }
 
 export { registerFeature, getFeatures };
+window.__TECHATLAS_FEATURES__ = features;
