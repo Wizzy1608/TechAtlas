@@ -20,9 +20,10 @@ function WelcomePage() {
       .finally(() => setLoading(false));
   }, []);
 
-   const handleSearch = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      window.__searchQuery__ = searchQuery.trim();
       window.dispatchEvent(new CustomEvent('navigate', {
         detail: { feature: 'search' }
       }));

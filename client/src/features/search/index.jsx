@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { get } from '../../lib/api';
 import ResourceCard from '../../components/ResourceCard';
 import DifficultyFilter from '../../components/DifficultyFilter';
@@ -11,6 +11,22 @@ function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [difficulty, setDifficulty] = useState('');
   const [searched, setSearched] = useState(false);
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (window.__searchQuery__ && !hasRun.current) {
+      hasRun.current = true;
+      const q = window.__searchQuery__;
+      window.__searchQuery__ = '';
+      setQuery(q);
+      setLoading(true);
+      setSearched(true);
+      get(`/api/search?q=${encodeURIComponent(q)}`)
+        .then(data => { setResults(data.data || []); setRelated(data.related || []); })
+        .catch(() => { setResults([]); setRelated([]); })
+        .finally(() => setLoading(false));
+    }
+  }, []);
 
   const handleSearch = async () => {
     if (!query.trim()) return;
